@@ -1,0 +1,192 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
+  background: #f4f6f8;
+  color: #23272b;
+  font-size: 14px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e3e7eb;
+}
+
+.top h1 { margin: 0; font-size: 19px; }
+.sub { margin: 6px 0 0; color: #6b7280; font-size: 13px; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.chip {
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #eef1f4;
+  color: #5b6570;
+}
+.chip.on { background: #e7f5ee; color: #1b7a4f; }
+
+main {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 16px;
+  padding: 16px 24px 24px;
+  align-items: stretch;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e3e7eb;
+  border-radius: 12px;
+  padding: 16px 18px 18px;
+}
+/* 왼쪽 패널만 줄 높이를 정하고, 오른쪽은 그 높이에 맞춘 뒤 안에서 스크롤합니다. */
+main > .panel:first-child { align-self: start; }
+
+.panel h2 {
+  margin: 18px 0 10px;
+  font-size: 14px;
+  color: #1f4e79;
+}
+.panel h2:first-child { margin-top: 2px; }
+
+label { display: block; margin-bottom: 10px; font-size: 13px; color: #44505c; }
+
+input[type="text"] {
+  width: 100%;
+  margin-top: 5px;
+  padding: 9px 11px;
+  border: 1px solid #d4dae0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+input[type="text"]:focus { outline: 2px solid #c7dcf5; border-color: #8fb8e8; }
+
+textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 9px 11px;
+  border: 1px solid #d4dae0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+textarea:focus { outline: 2px solid #c7dcf5; border-color: #8fb8e8; }
+
+select {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px 10px;
+  border: 1px solid #d4dae0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  background: #ffffff;
+}
+
+.need { color: #e8590c; font-size: 11px; }
+.hint { color: #9aa4ae; font-size: 11px; }
+
+.radios { margin-bottom: 12px; }
+.row { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+.row input { margin: 0; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.buttons.small { margin-top: 8px; }
+
+button {
+  padding: 9px 13px;
+  border: 1px solid #d4dae0;
+  background: #ffffff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+button:hover { background: #f6f8fa; }
+button:disabled { opacity: 0.5; cursor: default; }
+
+button.primary {
+  background: #03c75a;
+  border-color: #03c75a;
+  color: #ffffff;
+  font-weight: 700;
+}
+button.primary:hover { background: #02b351; }
+
+.buttons.small button { padding: 7px 10px; font-size: 12px; }
+
+.progress {
+  margin-top: 14px;
+  height: 6px;
+  background: #eceff2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+#bar { height: 100%; width: 0; background: #03c75a; transition: width 0.25s; }
+
+.status { margin: 8px 0 0; font-size: 12px; color: #6b7280; }
+
+.wide {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  contain: size; /* 미리보기 내용 길이가 칸 높이를 늘리지 않게 합니다 */
+}
+
+.tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.tab {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+.tab.on { background: #1f4e79; border-color: #1f4e79; color: #ffffff; }
+
+.view { flex: 1 1 0; min-height: 0; overflow: auto; }
+.hidden { display: none; }
+
+#preview { padding: 6px 10px; }
+#preview h1 { font-size: 21px; margin: 4px 0 16px; }
+#preview p { margin: 0 0 6px; }
+#preview figure { margin: 14px 0; }
+#preview img { width: 100%; border-radius: 10px; display: block; }
+#preview figcaption { margin-top: 6px; font-size: 12px; color: #8a949e; text-align: center; }
+#preview .meta {
+  background: #f7f9fb;
+  border: 1px solid #e6eaee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: #556;
+  line-height: 1.7;
+}
+#preview blockquote { line-height: 1.6; }
+
+#log { font-size: 12px; line-height: 1.8; color: #44505c; white-space: pre-wrap; }
+#log .line { padding: 2px 0; border-bottom: 1px solid #f1f3f5; }
+#log .time { color: #9aa4ae; margin-right: 6px; }
+
+/* 글 목록 20줄: 번호 · 키워드 · 제목 · 상태. 20줄이 왼쪽 칸을 너무 길게 만들지 않게 높이를 정하고 안에서 스크롤합니다. */
+.posts { display: grid; gap: 9px; margin: 6px 0 14px; max-height: 560px; overflow-y: auto; padding: 2px 6px 2px 2px; }
+.post-row { display: grid; grid-template-columns: 34px 1fr; gap: 3px 6px; align-items: center; }
+.post-row .num { font-size: 12px; color: #44505c; font-weight: 600; }
+.post-row input[type="text"] { margin: 0; }
+/* 제목 칸은 키워드 칸 바로 아래에 둡니다. (왼쪽 칸이 좁아 나란히 두면 제목이 몇 글자밖에 안 보입니다) */
+.post-row input.title { grid-column: 2 / 3; padding: 6px 11px; font-size: 13px; background: #fbfcfd; }
+.post-row .state { grid-column: 2 / 3; font-size: 11px; color: #9aa4ae; min-height: 0; }
+.post-row .state:empty { display: none; }
+.post-row .state.work { color: #1b6ec2; }
+.post-row .state.done { color: #2b8a3e; }
+.post-row .state.fail { color: #e03131; }
+.post-row .state.ready { color: #1b6ec2; }
+.post-row .state.viewable { cursor: pointer; text-decoration: underline; }

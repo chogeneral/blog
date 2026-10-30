@@ -1,0 +1,7 @@
+node_modules/
+data/
+.env
+**/.env
+**/env.txt
+_workspace/
+_workspace_*/

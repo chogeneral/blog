@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: file:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>네이버 블로그 글쓰기 자동화</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>네이버 블로그 글쓰기 자동화</h1>
+    <p class="sub">키워드를 넣으면 SEO 글과 이미지를 만들고, 브라우저에 직접 입력해 임시저장까지 진행합니다.</p>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>1. 글 목록 (한 줄 = 글 1개, 최대 20개)</h2>
+    <p class="hint">키워드를 채운 줄만 차례로 쓰고 글마다 임시저장합니다. 키워드는 쉼표(,)로 최대 3개, 첫 번째가 메인 키워드입니다. 제목을 넣으면 그 제목 그대로 쓰고 글도 제목에 맞춰 씁니다. 비우면 키워드를 조합해 자동으로 만듭니다. 줄이 많아 목록 안에서 위아래로 스크롤됩니다.</p>
+    <div class="posts" id="posts"></div>
+
+    <h2>2. 작성 방식</h2>
+    <div class="radios">
+      <label class="row"><input type="radio" name="input" value="type" checked> 키보드 입력 방식(키스트로크)</label>
+      <label class="row"><input type="radio" name="input" value="paste"> 빠른 입력(서식 붙여넣기)</label>
+    </div>
+    <label>글쓰기 엔진
+      <select id="engine">
+        <option value="auto">자동 (딥시크 → Gemini → 로컬 AI → 내장 글 틀)</option>
+        <option value="deepseek">딥시크(DeepSeek)만</option>
+        <option value="ollama">로컬 AI(Ollama)만 — 키 없이 무료</option>
+        <option value="gemini">Gemini만</option>
+        <option value="local">내장 글 틀만 — 설치 없이 가장 빠름</option>
+      </select>
+    </label>
+    <div class="radios">
+      <label class="row"><input type="radio" name="style" value="rules" checked> 글 스타일: 프로그램 규칙대로(소제목·별점·태그 구조)</label>
+      <label class="row"><input type="radio" name="style" value="chat"> 글 스타일: 채팅처럼 자유롭게(딥시크 채팅에 묻듯이 아래 요청만 전달)</label>
+    </div>
+    <label>AI 추가 요청(프롬프트) <span class="hint">딥시크·Gemini·로컬 AI 에 그대로 전달하며, 다음에 켤 때도 기억합니다</span>
+      <textarea id="prompt" rows="4" placeholder="예) 30개월 아이를 키우는 아빠 입장에서 실제 경험담처럼 써 주세요. 육아 꿀팁을 3개 이상 넣어 주세요."></textarea>
+    </label>
+    <div class="radios">
+      <label class="row"><input type="checkbox" id="useImage" checked> 이미지 넣기 (GPT Image 2 그림, 안 되면 무료 사진)</label>
+      <label class="row"><input type="checkbox" id="autoSave" checked> 네이버 임시저장까지 자동 진행</label>
+    </div>
+
+    <h2>3. 실행</h2>
+    <div class="buttons">
+      <button id="runAll" class="primary">글 만들고 임시저장까지 (채운 줄 수만큼)</button>
+      <button id="runDraft">글만 만들기(미리보기)</button>
+      <button id="runNaver" disabled>네이버에 입력 + 임시저장</button>
+    </div>
+    <div class="buttons small">
+      <button id="openDrafts">저장 폴더</button>
+      <button id="openImages">이미지 폴더</button>
+      <button id="openEnv">API 키 설정(.env)</button>
+      <button id="installAi">로컬 AI 설치</button>
+      <button id="closeBrowser">브라우저 닫기</button>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <p class="status" id="status">대기 중입니다.</p>
+  </section>
+
+  <section class="panel wide">
+    <div class="tabs">
+      <button class="tab on" data-tab="preview">미리보기</button>
+      <button class="tab" data-tab="log">진행 기록</button>
+    </div>
+    <div id="preview" class="view"></div>
+    <div id="log" class="view hidden"></div>
+  </section>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

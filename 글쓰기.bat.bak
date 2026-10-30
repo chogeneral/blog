@@ -1,0 +1,71 @@
+@echo off
+chcp 65001 >nul
+title 네이버 블로그 글쓰기 자동화
+cd /d "%~dp0"
+
+where node >nul 2>&1
+if errorlevel 1 (
+  echo [오류] Node.js 가 설치되어 있지 않습니다.
+  echo https://nodejs.org 에서 LTS 버전을 설치한 뒤 다시 실행해 주시기 바랍니다.
+  pause
+  exit /b 1
+)
+
+if not exist "node_modules\electron" (
+  echo 처음 실행입니다. 필요한 프로그램을 설치합니다. 2분에서 5분 정도 걸립니다.
+  call npm install
+  if errorlevel 1 (
+    echo [오류] 설치에 실패했습니다. 인터넷 연결을 확인해 주시기 바랍니다.
+    pause
+    exit /b 1
+  )
+)
+
+echo.
+echo ===========================================================
+echo    네이버 블로그 글쓰기 자동화
+echo ===========================================================
+echo  - 키워드는 2~3개를 넣으면 SEO 에 좋습니다. 1개만 넣어도 됩니다.
+echo  - 제목을 비워 두면 키워드에 맞는 제목을 자동으로 만듭니다.
+echo  - 제목을 넣으면 그 제목에 맞춰 글을 작성합니다.
+echo.
+
+set "KW1="
+set "KW2="
+set "KW3="
+set "POSTTITLE="
+
+set /p "KW1=키워드 1 (필수)        : "
+if not defined KW1 (
+  echo.
+  echo 키워드 1 은 꼭 입력해야 합니다.
+  pause
+  exit /b 1
+)
+set /p "KW2=키워드 2 (없으면 엔터) : "
+set /p "KW3=키워드 3 (없으면 엔터) : "
+set /p "POSTTITLE=제목   (없으면 엔터) : "
+
+set "KEYWORDS=%KW1%"
+if defined KW2 set "KEYWORDS=%KEYWORDS%,%KW2%"
+if defined KW3 set "KEYWORDS=%KEYWORDS%,%KW3%"
+
+echo.
+echo  입력한 키워드 : %KEYWORDS%
+if defined POSTTITLE (echo  입력한 제목   : %POSTTITLE%) else (echo  입력한 제목   : 자동 생성)
+echo.
+
+choice /c yn /n /m " 바로 글을 쓰고 임시저장까지 진행할까요? [Y=바로실행 / N=화면에서확인] "
+if errorlevel 2 (set "AUTORUN=") else (set "AUTORUN=--auto")
+
+echo.
+echo  프로그램을 실행합니다.
+echo  네이버 로그인 창이 뜨면 한 번만 직접 로그인해 주시기 바랍니다.
+echo  (로그인 정보는 data\naver-profile 폴더에 남아 다음부터는 자동으로 들어갑니다)
+echo.
+
+call "node_modules\.bin\electron.cmd" . --keywords="%KEYWORDS%" --title="%POSTTITLE%" %AUTORUN%
+
+echo.
+echo 프로그램이 종료되었습니다.
+pause

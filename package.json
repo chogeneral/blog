@@ -1,0 +1,17 @@
+{
+  "name": "naver-blog-writer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "네이버 블로그 SEO 글 작성 + 이미지 생성 + 임시저장 자동화",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "playwright": "^1.63.0"
+  },
+  "devDependencies": {
+    "electron": "^34.0.0"
+  },
+  "type": "module"
+}
